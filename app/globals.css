@@ -94,6 +94,11 @@ html, body {
 
 /* ── Crossfade ── */
 .xfade { transition: opacity 1.3s ease-in-out; }
+.mobile-cut { transition: opacity 1.3s ease-in-out; }
+
+@media (max-width: 767px) {
+  .mobile-cut { transition: none; }
+}
 
 /* ── Lightbox ── */
 @keyframes lbIn    { from { opacity: 0; } to { opacity: 1; } }

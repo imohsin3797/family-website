@@ -167,9 +167,21 @@ function CyclingPhoto({
 
   return (
     <button type="button" onClick={() => onClickSrc?.(visRef.current)}
-      className={`relative w-full h-full cursor-pointer block rounded-[1px] ${fit === "cover" ? "overflow-hidden" : "overflow-hidden bg-page"}`}>
-      <Image src={botSrc} alt="" fill className={fit === "contain" ? "object-contain" : "object-cover"} sizes="(max-width:768px) 90vw, 30vw" />
-      <Image src={topSrc} alt="" fill className={`${fit === "contain" ? "object-contain" : "object-cover"} xfade ${showTop ? "opacity-100" : "opacity-0"}`} sizes="(max-width:768px) 90vw, 30vw" />
+      className="relative w-full h-full overflow-hidden cursor-pointer block rounded-[1px]">
+      <Image
+        src={botSrc}
+        alt=""
+        fill
+        className={fit === "contain" ? "object-contain" : "object-contain md:object-cover"}
+        sizes="(max-width:768px) 90vw, 30vw"
+      />
+      <Image
+        src={topSrc}
+        alt=""
+        fill
+        className={`${fit === "contain" ? "object-contain" : "object-contain md:object-cover"} ${fit === "contain" ? "mobile-cut" : "xfade"} ${showTop ? "opacity-100" : "opacity-0"}`}
+        sizes="(max-width:768px) 90vw, 30vw"
+      />
     </button>
   );
 }
@@ -188,25 +200,23 @@ type GP = { groups: string[][]; active: boolean; oc: (s: string) => void; fit?: 
 
 function Sl({ list, active, stagger, oc, fit = "cover" }: { list: string[]; active: boolean; stagger: number; oc: (s: string) => void; fit?: "cover" | "contain" }) {
   return (
-    <div className="absolute inset-0 rounded-[2px]" style={{ background: "linear-gradient(145deg, #C4A44D, #A8842F, #D4B65E)", padding: "2px" }}>
-      <div className="h-full rounded-[1px]" style={{ background: "#EDE8DD", padding: "3px" }}>
-        <CyclingPhoto list={list} active={active} stagger={stagger} fit={fit} onClickSrc={oc} />
-      </div>
+    <div className="absolute inset-0 overflow-hidden rounded-[2px] bg-transparent">
+      <CyclingPhoto list={list} active={active} stagger={stagger} fit={fit} onClickSrc={oc} />
     </div>
   );
 }
 
 function CA({ groups: g, active, oc, fit = "cover" }: GP) {
   return (
-    <div className="flex flex-col h-full gap-[5px]">
-      <div className="flex gap-[5px] flex-[5] min-h-0">
+    <div className="flex flex-col h-full gap-[2px] md:gap-[5px]">
+      <div className="flex gap-[2px] md:gap-[5px] flex-[5] min-h-0">
         <div className="relative flex-[2.2]"><Sl list={g[0]} active={active} stagger={0} oc={oc} fit={fit} /></div>
-        <div className="flex flex-col gap-[5px] flex-1">
+        <div className="flex flex-col gap-[2px] md:gap-[5px] flex-1">
           <div className="relative flex-1"><Sl list={g[1]} active={active} stagger={900} oc={oc} fit={fit} /></div>
           <div className="relative flex-1"><Sl list={g[2]} active={active} stagger={1800} oc={oc} fit={fit} /></div>
         </div>
       </div>
-      <div className="flex gap-[5px] flex-[3] min-h-0">
+      <div className="flex gap-[2px] md:gap-[5px] flex-[3] min-h-0">
         <div className="relative flex-1"><Sl list={g[3]} active={active} stagger={2700} oc={oc} fit={fit} /></div>
         <div className="relative flex-[1.6]"><Sl list={g[4]} active={active} stagger={3600} oc={oc} fit={fit} /></div>
         <div className="relative flex-1"><Sl list={g[5]} active={active} stagger={4500} oc={oc} fit={fit} /></div>
@@ -217,15 +227,15 @@ function CA({ groups: g, active, oc, fit = "cover" }: GP) {
 
 function CB({ groups: g, active, oc, fit = "cover" }: GP) {
   return (
-    <div className="flex h-full gap-[5px]">
-      <div className="flex flex-col gap-[5px] flex-[2.2] min-h-0">
+    <div className="flex h-full gap-[2px] md:gap-[5px]">
+      <div className="flex flex-col gap-[2px] md:gap-[5px] flex-[2.2] min-h-0">
         <div className="relative flex-[2.5]"><Sl list={g[0]} active={active} stagger={0} oc={oc} fit={fit} /></div>
-        <div className="flex gap-[5px] flex-1">
+        <div className="flex gap-[2px] md:gap-[5px] flex-1">
           <div className="relative flex-1"><Sl list={g[1]} active={active} stagger={1200} oc={oc} fit={fit} /></div>
           <div className="relative flex-1"><Sl list={g[2]} active={active} stagger={2400} oc={oc} fit={fit} /></div>
         </div>
       </div>
-      <div className="flex flex-col gap-[5px] flex-[1.5] min-h-0">
+      <div className="flex flex-col gap-[2px] md:gap-[5px] flex-[1.5] min-h-0">
         <div className="relative flex-1"><Sl list={g[3]} active={active} stagger={800} oc={oc} fit={fit} /></div>
         <div className="relative flex-[1.6]"><Sl list={g[4]} active={active} stagger={2000} oc={oc} fit={fit} /></div>
         <div className="relative flex-1"><Sl list={g[5]} active={active} stagger={3200} oc={oc} fit={fit} /></div>
@@ -236,16 +246,16 @@ function CB({ groups: g, active, oc, fit = "cover" }: GP) {
 
 function CC({ groups: g, active, oc, fit = "cover" }: GP) {
   return (
-    <div className="flex flex-col h-full gap-[5px]">
-      <div className="flex gap-[5px] flex-1 min-h-0">
+    <div className="flex flex-col h-full gap-[2px] md:gap-[5px]">
+      <div className="flex gap-[2px] md:gap-[5px] flex-1 min-h-0">
         <div className="relative flex-[2.2]"><Sl list={g[0]} active={active} stagger={0} oc={oc} fit={fit} /></div>
         <div className="relative flex-1"><Sl list={g[1]} active={active} stagger={1500} oc={oc} fit={fit} /></div>
       </div>
-      <div className="flex gap-[5px] flex-[1.4] min-h-0">
+      <div className="flex gap-[2px] md:gap-[5px] flex-[1.4] min-h-0">
         <div className="relative flex-1"><Sl list={g[2]} active={active} stagger={600} oc={oc} fit={fit} /></div>
         <div className="relative flex-[2]"><Sl list={g[3]} active={active} stagger={2100} oc={oc} fit={fit} /></div>
       </div>
-      <div className="flex gap-[5px] flex-1 min-h-0">
+      <div className="flex gap-[2px] md:gap-[5px] flex-1 min-h-0">
         <div className="relative flex-[1.6]"><Sl list={g[4]} active={active} stagger={1200} oc={oc} fit={fit} /></div>
         <div className="relative flex-1"><Sl list={g[5]} active={active} stagger={3000} oc={oc} fit={fit} /></div>
       </div>
@@ -267,7 +277,7 @@ function Collage({ photos, active, onClickSrc, variant, fit = "cover" }: {
   }, [groups]);
   if (photos.length <= 2) {
     return (
-      <div className="flex h-full gap-[5px]">
+      <div className="flex h-full gap-[2px] md:gap-[5px]">
         {padded.slice(0, Math.max(1, photos.length)).map((g, i) => (
           <div key={i} className="relative flex-1"><Sl list={g} active={active} stagger={i*1000} oc={onClickSrc} fit={fit} /></div>
         ))}
@@ -378,11 +388,16 @@ function Featured({ photo, title, active, onClickSrc, featuredIdx }: {
   const tintBase = featuredIdx % TINTS.length;
 
   const photoBlock = (
-    <div className={`${flipped ? "txt-enter-r" : "txt-enter"} shrink-0 ${active ? "on" : ""}`}>
+    <div className={`${flipped ? "txt-enter-r" : "txt-enter"} shrink-0 max-w-[82vw] md:max-w-none ${active ? "on" : ""}`}>
       <div className="gold-frame inline-block">
         <div className="gold-frame-mat">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={photo} alt={title} className="block max-h-[50vh] sm:max-h-[58vh] md:max-h-[65vh] w-auto cursor-pointer" onClick={() => onClickSrc(photo)} />
+          <img
+            src={photo}
+            alt={title}
+            className="block max-h-[44svh] w-auto max-w-[72vw] object-contain cursor-pointer sm:max-h-[52svh] sm:max-w-[68vw] md:max-h-[65vh] md:max-w-none"
+            onClick={() => onClickSrc(photo)}
+          />
         </div>
       </div>
     </div>
@@ -409,7 +424,7 @@ function Featured({ photo, title, active, onClickSrc, featuredIdx }: {
       {featuredIdx % 3 === 1 && <SmallFlower className="absolute top-20 left-16 w-10 h-10 pointer-events-none" tint={(tintBase + 3) % 5} />}
       {featuredIdx % 5 === 0 && <FloralBranch className="absolute top-0 right-16 pointer-events-none" tint={tintBase} />}
 
-      <div className={`flex flex-col ${flipped ? "md:flex-row-reverse" : "md:flex-row"} items-center gap-8 md:gap-14 max-w-5xl w-full relative z-10`}>
+      <div className={`flex flex-col ${flipped ? "md:flex-row-reverse" : "md:flex-row"} items-center gap-5 md:gap-14 max-w-5xl w-full relative z-10 py-4 md:py-0`}>
         {photoBlock}
         {textBlock}
       </div>
@@ -470,14 +485,14 @@ function Content({ section, active, variant, onClickSrc, hasConnectionBelow, sec
       {sectionIdx % 2 === 0 && <SmallFlower className="absolute bottom-8 right-1/4 w-9 h-9 pointer-events-none" tint={(tintIdx + 3) % 5} />}
 
       {/* Mobile header — accent colored */}
-      <div className={`txt-enter md:hidden shrink-0 px-5 pt-4 pb-2 relative z-10 ${active ? "on" : ""}`}>
+      <div className={`txt-enter md:hidden shrink-0 px-4 pt-3 pb-2 relative z-10 ${active ? "on" : ""}`}>
         <span className="text-ink-light/30 text-[9px] tracking-[0.3em] uppercase block mb-1">{section.chapterName}</span>
         <div className="flex items-center gap-2 mb-2">
           <div className="w-4 h-[1px]" style={{ background: accent }} />
           <span className="text-[9px] tracking-[0.25em] uppercase" style={{ color: accent }}>{section.subtitle}</span>
         </div>
-        <h3 className={`${SC} text-balance text-[2.9rem] leading-[1.05] max-w-[10ch]`} style={{ color: accent }}>{section.title}</h3>
-        <p className={`${D} mt-3 max-w-[28ch] text-[13px] leading-6 text-ink-light italic`}>
+        <h3 className={`${SC} text-balance text-[2.3rem] leading-[1] max-w-[10ch]`} style={{ color: accent }}>{section.title}</h3>
+        <p className={`${D} mt-2 max-w-[30ch] text-[12px] leading-5 text-ink-light italic`}>
           {section.description}
         </p>
       </div>
@@ -501,7 +516,7 @@ function Content({ section, active, variant, onClickSrc, hasConnectionBelow, sec
       </div>
 
       {/* Collage */}
-      <div className={`img-enter flex-1 min-h-0 p-2 md:p-3 relative z-10 ${active ? "on" : ""}`}>
+      <div className={`img-enter h-[42svh] sm:h-[50svh] md:h-auto flex-1 min-h-0 p-1 md:p-3 relative z-10 ${active ? "on" : ""}`}>
         <Collage photos={section.photos} active={active} onClickSrc={onClickSrc} variant={variant} fit={section.photoFit} />
       </div>
     </div>
@@ -526,9 +541,9 @@ function Closing({ photos, active, onClickSrc }: {
       <SmallFlower className="absolute top-1/3 right-1/4 w-12 h-12 pointer-events-none" tint={1} />
       <SmallFlower className="absolute bottom-1/3 left-1/5 w-10 h-10 pointer-events-none" tint={3} />
 
-      <div className={`txt-enter md:hidden shrink-0 px-5 pt-4 pb-2 relative z-10 ${active ? "on" : ""}`}>
+      <div className={`txt-enter md:hidden shrink-0 px-4 pt-3 pb-2 relative z-10 ${active ? "on" : ""}`}>
         <span className="text-rose text-[9px] tracking-[0.25em] uppercase block mb-1">{galleryCopy.closing.eyebrow}</span>
-        <h3 className={`${SC} text-4xl text-rose`}>{galleryCopy.closing.title}</h3>
+        <h3 className={`${SC} text-[2.3rem] leading-[1.02] text-rose`}>{galleryCopy.closing.title}</h3>
       </div>
       <div className={`txt-enter hidden md:flex w-[33%] lg:w-[31%] items-center px-10 lg:px-14 shrink-0 relative z-10 ${active ? "on" : ""}`}>
         <div className="max-w-[340px]">
@@ -548,7 +563,7 @@ function Closing({ photos, active, onClickSrc }: {
           <p className="text-ink-light/25 text-[10px] tracking-wider mt-2">- {galleryCopy.closing.quoteAuthor}</p>
         </div>
       </div>
-      <div className={`img-enter flex-1 min-h-0 p-2 md:p-3 relative z-10 ${active ? "on" : ""}`}>
+      <div className={`img-enter h-[43svh] sm:h-[50svh] md:h-auto flex-1 min-h-0 p-1 md:p-3 relative z-10 ${active ? "on" : ""}`}>
         <Collage photos={photos} active={active} onClickSrc={onClickSrc} variant={1} />
       </div>
     </div>
@@ -561,7 +576,7 @@ function FinalNote({
   active: boolean;
 }) {
   return (
-    <div className="h-full flex items-center justify-center bg-page relative overflow-hidden px-6 md:px-10">
+    <div className="h-full flex items-center justify-center bg-page relative overflow-hidden px-4 py-4 md:px-10 md:py-0">
       <FloralBranch className="absolute -bottom-12 left-10 pointer-events-none z-0" tint={0} />
       <FloralBranch className="absolute -bottom-12 right-10 pointer-events-none z-0" flip tint={1} />
       <FloralCorner className="absolute top-10 left-10 pointer-events-none z-0" tint={4} />
@@ -572,7 +587,7 @@ function FinalNote({
       <SmallFlower className="absolute bottom-24 right-1/5 w-12 h-12 pointer-events-none z-0" tint={0} />
 
       <div className={`txt-enter relative z-10 w-full max-w-6xl ${active ? "on" : ""}`}>
-        <div className="grid items-center gap-8 md:grid-cols-[1.05fr_0.95fr]">
+        <div className="grid items-center gap-4 md:gap-8 md:grid-cols-[1.05fr_0.95fr]">
           <div className="relative mx-auto">
             <div className="absolute -inset-8 rounded-[40px] bg-[radial-gradient(circle,rgba(184,150,62,0.14),rgba(184,150,62,0))]" />
             <div className="relative gold-frame inline-block">
@@ -581,19 +596,19 @@ function FinalNote({
                 <img
                   src={galleryCopy.finalNote.imageSrc}
                   alt={galleryCopy.finalNote.imageAlt}
-                  className="block h-[340px] w-[260px] object-cover sm:h-[420px] sm:w-[320px] md:h-[500px] md:w-[380px]"
+                  className="block h-[30svh] w-[52vw] max-w-[240px] object-cover sm:h-[40svh] sm:w-[56vw] md:h-[500px] md:w-[380px]"
                 />
               </div>
             </div>
           </div>
 
-          <div className="rounded-[28px] border border-gold/18 bg-[linear-gradient(135deg,rgba(255,255,255,0.78),rgba(237,232,221,0.92))] p-6 shadow-[0_20px_60px_rgba(28,24,18,0.10)] backdrop-blur-sm md:p-8">
+          <div className="rounded-[24px] border border-gold/18 bg-[linear-gradient(135deg,rgba(255,255,255,0.78),rgba(237,232,221,0.92))] p-4 shadow-[0_20px_60px_rgba(28,24,18,0.10)] backdrop-blur-sm md:rounded-[28px] md:p-8">
             <div className="mb-4 flex items-center justify-center gap-3">
               <div className="h-[1px] w-10 bg-gold/45" />
               <span className="text-[10px] tracking-[0.28em] uppercase text-gold">{galleryCopy.finalNote.eyebrow}</span>
             </div>
-            <h3 className={`${SC} mb-5 text-center text-4xl text-rose md:text-5xl`}>{galleryCopy.finalNote.title}</h3>
-            <p className={`${D} text-center text-[15px] leading-8 text-ink-light italic md:text-base`}>
+            <h3 className={`${SC} mb-4 text-center text-[2.2rem] leading-[1.02] text-rose md:text-5xl`}>{galleryCopy.finalNote.title}</h3>
+            <p className={`${D} text-center text-[13px] leading-6 text-ink-light italic md:text-base md:leading-8`}>
               {galleryCopy.finalNote.description}
             </p>
             <div className="mt-6 mx-auto h-[1px] w-14 bg-gold/25" />
@@ -666,7 +681,12 @@ export default function FamilyGallery({ sections }: { sections: GallerySection[]
       <div ref={ref} className="snap-scroll">
         {sections.map((s, i) => (<div key={i} data-i={i} className="snap-panel">{panel(s, i)}</div>))}
       </div>
-      <div className="fixed right-4 bottom-4 z-50 flex flex-col gap-2">
+      <div
+        className="fixed right-3 md:right-4 z-50 flex flex-col gap-2"
+        style={{
+          bottom: "calc(env(safe-area-inset-bottom, 0px) + 0.75rem)",
+        }}
+      >
         <button
           type="button"
           onClick={() => go(0)}
